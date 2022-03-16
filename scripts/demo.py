@@ -59,16 +59,16 @@ def main(args):
 
         output_path = os.path.join(args.output_folder, os.path.basename(video_file).replace('.mp4', '_' + args.exp))
         os.makedirs(output_path, exist_ok=True)
-
-        if os.path.isdir(os.path.join(output_path, 'tmp_images')):
-            input_image_folder = os.path.join(output_path, 'tmp_images')
+        input_image_folder = os.path.join(output_path, 'tmp_images')
+        if os.path.isdir(os.path.join(output_path, 'tmp_images')) and len(os.listdir(input_image_folder))>0:
             logger.info(f'Frames are already extracted in \"{input_image_folder}\"')
             num_frames = len(os.listdir(input_image_folder))
+
             img_shape = cv2.imread(os.path.join(input_image_folder, '000001.png')).shape
         else:
             input_image_folder, num_frames, img_shape = video_to_images(
                 video_file,
-                img_folder=os.path.join(output_path, 'tmp_images'),
+                img_folder=input_image_folder,
                 return_info=True
             )
         output_img_folder = f'{input_image_folder}_output'

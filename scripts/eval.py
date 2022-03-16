@@ -29,6 +29,8 @@ from pare.utils.train_utils import load_pretrained_model
 from pare.core.config import run_grid_search_experiments
 from pare.utils.compute_error import compute_error
 
+import numpy as np
+import multiprocessing as mp
 
 def main(hparams):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -37,6 +39,9 @@ def main(hparams):
     logger.info(f'Hyperparameters: \n {hparams}')
 
     hparams.DATASET.NUM_WORKERS = 0  # set this to be compatible with other machines
+    cpu_count =  mp.cpu_count()
+    if cpu_count >= 4:
+        hparams.DATASET.NUM_WORKERS = 2 if cpu_count<24 else cpu_count//8
     model = PARETrainer(hparams=hparams).to(device)
 
     if hparams.TRAINING.PRETRAINED_LIT is not None:
