@@ -2,7 +2,6 @@
 
 This repo handles several compatibility issues in original PARE.
 Note that this repo is tested on Ubuntu 20, cuda 11.1, torch 1.8.2.
--ModuleNotFoundError from load_state_dict_from_url
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]()
 [![report](https://img.shields.io/badge/Project-Page-blue)](https://pare.is.tue.mpg.de/)
